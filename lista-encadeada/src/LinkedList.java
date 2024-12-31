@@ -1,35 +1,37 @@
 
-public class LinkedList implements ILinkedList{
+public class LinkedList implements ILinkedList {
 
     private Node head;
     private Node tail;
     private int size;
 
-    private static class Node{
+    private static class Node {
         int data;
         Node next;
         Node previous;
-        public Node(int value){
+
+        public Node(int value) {
             this.data = value;
         }
+
         public boolean hasNext() {
             return next != null;
         }
     }
 
-    public LinkedList(){
+    public LinkedList() {
         head = null;
         size = 0;
     }
 
-    private Node createNode(int data){
+    private Node createNode(int data) {
         return new Node(data);
     }
 
     @Override
     public void push(int data) {
         Node newNode = createNode(data);
-        if(head == null){
+        if (head == null) {
             head = tail = newNode;
         } else {
             newNode.previous = tail;
@@ -42,12 +44,12 @@ public class LinkedList implements ILinkedList{
     @Override
     public int pop() {
 
-        if(head == null){
+        if (head == null) {
             System.out.println("List is empty");
             return -1;
         }
 
-        if(!head.hasNext()){
+        if (!head.hasNext()) {
             head = null;
             size--;
             return tail.data;
@@ -63,17 +65,17 @@ public class LinkedList implements ILinkedList{
     @Override
     public void insert(int index, int data) {
         Node newNode = createNode(data);
-        if (index < 0 || index > size()-1) {
+        if (index < 0 || index > size() - 1) {
             System.out.println("Index out of bounds");
             return;
         }
 
-        if(head == null){
+        if (head == null) {
             System.out.println("List is empty");
             return;
         }
 
-        if (index == 0){
+        if (index == 0) {
             newNode.next = head;
             head.previous = newNode;
             head = newNode;
@@ -91,17 +93,17 @@ public class LinkedList implements ILinkedList{
 
     @Override
     public void remove(int index) {
-        if (index < 0 || index > size()-1) {
+        if (index < 0 || index > size() - 1) {
             System.out.println("Index out of bounds");
             return;
         }
 
-        if(head == null){
+        if (head == null) {
             System.out.println("List is empty");
             return;
         }
 
-        if (index == 0){
+        if (index == 0) {
             head.next.previous = null;
             head = head.next;
             size--;
@@ -116,17 +118,17 @@ public class LinkedList implements ILinkedList{
 
     @Override
     public int elementAt(int index) {
-        if (index < 0 || index > size()-1) {
+        if (index < 0 || index > size() - 1) {
             System.out.println("Index out of bounds");
             return -1;
         }
 
-        if(head == null){
+        if (head == null) {
             System.out.println("List is empty");
             return -1;
         }
 
-        if (index == 0){
+        if (index == 0) {
             return head.data;
         }
 
@@ -150,8 +152,8 @@ public class LinkedList implements ILinkedList{
         stringBuilder.append(current.data);
         System.out.println(stringBuilder);
     }
-    
-    private Node fetchNodeByIndex(int index){
+
+    private Node fetchNodeByIndex(int index) {
         boolean shouldStartToTail = index > size / 2;
 
         int currentIndex = shouldStartToTail ? size - 1 : 1;
@@ -159,7 +161,12 @@ public class LinkedList implements ILinkedList{
 
         while (currentIndex != index) {
             current = shouldStartToTail ? current.previous : current.next;
-            if(shouldStartToTail){currentIndex--;} else {currentIndex++;}
+            if (shouldStartToTail) {
+                currentIndex--;
+            } else {
+                currentIndex++;
+            }
         }
+        return current;
     }
 }
